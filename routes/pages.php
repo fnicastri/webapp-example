@@ -4,7 +4,7 @@ use \app\data;
 //////////////////////////////////////////////////////////////////////////////
 
 $app->get('/?', function () use ($app, $client) { // Add global variables in here to use
-	$project_types = $client->getEntries('project_types', [
+	$project_types = $client->getItems('project_types', [
 		'status' => '1',
 		'orderBy' => 'sort',
 		'orderDirection' => 'ASC'
@@ -32,14 +32,14 @@ $app->get('/projects/(:type)/(:project)', function ($type = "", $project = "") u
 
 	// $client->getEntry('projects', 1);
 
-	$project = $client->getEntries('projects', [
+	$project = $client->getItems('projects', [
 		'status' => '1',
 		'adv_where' => ['slug' => $project]
 	]);
 	$project = $project[0];
 	$id = $project['id'];
 
-	$timeline = $client->getEntries('project_milestones', [
+	$timeline = $client->getItems('project_milestones', [
 		'orderBy' => 'sort',
 		'orderDirection' => 'ASC',
 		'adv_where' => ['project_id' => $id]
@@ -55,20 +55,20 @@ $app->get('/projects/(:type)/(:project)', function ($type = "", $project = "") u
 //////////////////////////////////////////////////////////////////////////////
 
 $app->get('/about/?', function () use ($app, $client) {
-	$staff = $client->getEntries('staff', [
+	$staff = $client->getItems('staff', [
 		'status' => '1',
 		'orderBy' => 'sort',
 		'orderDirection' => 'ASC'
 	]);
 
-	$faq = $client->getEntries('faq', [
+	$faq = $client->getItems('faq', [
 		'status' => '1',
 		'orderBy' => 'sort',
 		'orderDirection' => 'ASC'
 	]);
 
 	// Need in two categories
-	$resources = $client->getEntries('resources', [
+	$resources = $client->getItems('resources', [
 		'status' => '1',
 		'orderBy' => 'sort',
 		'orderDirection' => 'ASC'
@@ -94,7 +94,7 @@ $app->get('/services/?', function () use ($app, $client) {
 //////////////////////////////////////////////////////////////////////////////
 
 $app->get('/news/?', function () use ($app, $client) {
-	$news = $client->getEntries('news', [
+	$news = $client->getItems('news', [
 		'status' => '1',
 		//'adv_where' => ['publish_date' => NOW()]
 		'orderBy' => 'publish_date',

@@ -9,9 +9,9 @@ $twig->addGlobal("project_name", "Directus WebApp Example");
 //////////////////////////////////////////////////////////////////////////////
 // Global Data
 
-$twig->addGlobal("about", $client->getEntry('about', 1));
+$twig->addGlobal("about", $client->getItem('about', 1));
 
-$project_types = $client->getEntries('project_types', [
+$project_types = $client->getItems('project_types', [
 	'status' => '1',
 	'orderBy' => 'sort',
 	'orderDirection' => 'ASC'
