@@ -1,0 +1,14 @@
+{% extends "base.twig.html" %}
+
+{% block bodyClass %}page-not-found{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="container pad-t-250 pad-b-250 centered">
+		<h1 class="text-serif align-center">Page Not Found</h1>
+		<a class="button margin-t-40" onclick="window.history.go(-1); return false;">Go Back</a>
+	</div>
+</div>
+
+{% endblock %}

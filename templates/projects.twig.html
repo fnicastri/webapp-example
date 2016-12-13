@@ -1,0 +1,100 @@
+{% extends "base.twig.html" %}
+
+{% block bodyClass %}projects-page{% endblock %}
+
+{% block content %}
+
+<div class="row bg-dark header">
+	<div class="container">
+		<div class="text-module">
+			<div class="text-sans uppercase bold">Premium App Design &amp; Development</div>
+			<div class="text-serif pad-t-20">Projects &amp; Case Studies</div>
+			<div class="text-body pad-t-20">{{about.projects_intro}}</div>
+			<a href="mailto:info@example.com"><div class="button primary margin-t-30">Contact Us</div></a>
+		</div>
+	</div>
+</div>
+
+{% for project_type in project_types %}
+
+<div class="row line-bottom responsive-max">
+	<div class="container">
+		<a name="{{project_type.slug}}"></a>
+		<div class="text-serif pad-t-80 pad-b-40 align-center">{{project_type.title}}</div>
+		<div class="modules">
+
+			{% for project in project_type.projects %}
+			<a href="{{rootUrl}}projects/{{project_type.slug}}/{{project.slug}}">
+				<div class="module">
+					<div class="overlay">
+						<div class="hover-slide">
+							<div class="text-sans uppercase">{{project.title}}</div>
+							<div class="text-body">{{project.client}}</div>
+						</div>
+					</div>
+					<img src="{{rootUrl}}uploads/example-screen.png">
+				</div>
+			</a>
+			{% endfor %}
+
+		</div>
+	</div>
+</div>
+
+{% if loop.index == 3 %}
+<div class="row widget-module">
+	<div class="container">
+		<form action="form_process.php" method="post" id="requestForm">
+			Hello, my name is <input type="text" name="name" id="widget-name" placeholder="Name"> and I am interested<br>
+			in learning more about <div class="select-container"><select name="project" id="widget-project">
+			<option>Service</option>
+			{% for project_type in project_types %}
+				<option value="{{project_type.title}}">{{project_type.title}}</option>
+			{% endfor %}
+			</select><img src="{{assetsRoot}}imgs/arrow.svg" class="select-arrow"></div>.<br> <!-- <input type="text" name="project" id="widget-project"> -->
+			You can reach me at <input type="text" name="email" id="widget-email" placeholder="me@email.com">.
+			<div class="margin-t-60 text-sans text-body small text-white faded max-width-400 margin-auto">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas elementum mauris eget mi luctus finibus.
+			</div>
+			<div class="button primary margin-t-60" id="requestFormSubmit">Request a Consultation</div>
+		</form>
+	</div>
+</div>
+{% endif %}
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

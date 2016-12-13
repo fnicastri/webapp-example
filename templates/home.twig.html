@@ -1,0 +1,105 @@
+{% extends "base.twig.html" %}
+
+{% block bodyClass %}class{% endblock %}
+
+{% block content %}
+
+<div class="row bg-dark header">
+	<div class="container">
+		<div class="text-module">
+			<div class="text-sans uppercase bold">Premium App Design &amp; Development</div>
+			<div class="text-serif pad-t-20">Welcome to Example</div>
+			<div class="text-body pad-t-20">{{about.home_intro}}</div>
+			<a href="mailto:info@example.com"><div class="button primary margin-t-30">Contact Us</div></a>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="container pad-tb-80">
+		<a href="{{rootUrl}}about#staff">
+			<div class="link-module margin">
+				<div class="center">
+					<div class="text-sans uppercase margin-b-10 bold">Meet our</div>
+					<div class="text-serif sub">Leadership</div>
+				</div>
+			</div>
+		</a>
+		<a href="{{rootUrl}}about#facility">
+			<div class="link-module margin">
+				<div class="center">
+					<div class="text-sans uppercase margin-b-10 bold">Photos of</div>
+					<div class="text-serif sub">Our Office</div>
+				</div>
+			</div>
+		</a>
+		<a href="{{rootUrl}}about#faq">
+			<div class="link-module">
+				<div class="center">
+					<div class="text-sans uppercase margin-b-10 bold">Answers to</div>
+					<div class="text-serif sub">Questions</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+{% for project_type in project_types %}
+<div class="row photo-module {% if loop.index is even %}bg-light{% endif %}">
+	<div class="container">
+		<div class="hero-{% if loop.index is even %}left{% else %}right{% endif %}">
+			<div class="parallax">
+				<img src="{{mediaUrl}}{{project_type.image.name}}">
+			</div>
+		</div>
+		<div class="text-module {% if loop.index is even %}right{% endif %}">
+			<div class="text-serif pad-t-20">{{project_type.title}}</div>
+			<div class="text-body pad-t-20">{{project_type.description}}</div>
+			<a href="{{rootUrl}}projects#{{project_type.slug}}"><div class="button primary margin-t-30">Learn More</div></a>
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+<div class="row widget-module">
+	<div class="container">
+		<form action="form_process.php" method="post" id="requestForm">
+			Hello, my name is <input type="text" name="name" id="widget-name" placeholder="Name"> and I am interested<br>
+			in learning more about <div class="select-container"><select name="project" id="widget-project">
+			<option>Service</option>
+			{% for project_type in project_types %}
+				<option value="{{project_type.title}}">{{project_type.title}}</option>
+			{% endfor %}
+			</select><img src="{{assetsRoot}}imgs/arrow.svg" class="select-arrow"></div>.<br> <!-- <input type="text" name="project" id="widget-project"> -->
+			You can reach me at <input type="text" name="email" id="widget-email" placeholder="me@email.com">.
+			<div class="margin-t-60 text-sans text-body small text-white faded max-width-400 margin-auto bold">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas elementum mauris eget mi luctus finibus.
+			</div>
+			<div class="button primary margin-t-60" id="requestFormSubmit">Request a Quote</div>
+		</form>
+	</div>
+</div>
+
+<div class="row slideshow-module bg-light">
+	<div class="container">
+		<div class="text-serif pad-t-120 pad-b-40 align-center">Our Office</div>
+		<div class="slideshow">
+			<ul>
+				{% for slide in about.slideshow %}
+				<li style="background-image:url('{{mediaUrl}}{{slide.data.name}}');"></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="row blank-module">
+	<div class="container pad-tb-240">
+		<div class="text-module margin-auto max-width-750">
+			<div class="text-sans uppercase bold">Our Methodology</div>
+			<div class="text-serif sub pad-t-20 more-line-height responsive-quote">&ldquo;{{about.philosophy_quote}}&rdquo;</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

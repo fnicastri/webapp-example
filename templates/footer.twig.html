@@ -1,0 +1,64 @@
+<div class="row full-width map">
+	<a href="https://www.google.com/maps/place/Brooklyn,+NY" target="_blank">
+		<div id="map"></div>
+	</a>
+</div>
+<div class="row bg-light footer-logos centered">
+	<a href="http://example.com" target="_blank"><img src="{{assetsRoot}}imgs/logo-html.svg" class="pad-30"></a>
+	<a href="http://example.com" target="_blank"><img src="{{assetsRoot}}imgs/logo-css.svg" class="pad-30"></a>
+	<a href="http://example.com" target="_blank"><img src="{{assetsRoot}}imgs/logo-sass.svg" class="pad-30"></a>
+	<a href="http://example.com" target="_blank"><img src="{{assetsRoot}}imgs/logo-backbone.svg" class="pad-30"></a>
+</div>
+<div class="row footer-newsletter">
+	<div class="container">
+		<div class="text-serif sub pad-tb-40 inline-block">
+			Would you like to receive our newsletter?
+		</div>
+		<div class="button primary outline inline-block newsletter-button">Email Signup</div>
+	</div>
+</div>
+<div class="row bg-primary">
+	<div class="container footer-nav pad-tb-70">
+		<ul>
+			<li class="white">About Us</li>
+			<a href="{{rootUrl}}about#leadership"><li>Our Leadership</li></a>
+			<a href="{{rootUrl}}about#methodology"><li>Our Methodology</li></a>
+			<a href="{{rootUrl}}about#office"><li>Our Office</li></a>
+			<a href="{{rootUrl}}about#faq"><li>FAQ</li></a>
+			<a href="{{rootUrl}}about#forms"><li>Client Forms</li></a>
+			<a href="{{rootUrl}}news"><li>News &amp; Events</li></a>
+		</ul><ul>
+			<li class="white">Case-Studies</li>
+			<a href="{{rootUrl}}projects"><li>Project One</li></a>
+			<a href="{{rootUrl}}projects"><li>Project One</li></a>
+			<a href="{{rootUrl}}projects"><li>Project One</li></a>
+			<a href="{{rootUrl}}projects"><li>Project One</li></a>
+			<a href="{{rootUrl}}projects"><li>Project One</li></a>
+			<a href="{{rootUrl}}projects"><li>Project One</li></a>
+		</ul><ul>
+			<li class="white">Services</li>
+			{% for project_type in project_types %}
+			<a href="{{rootUrl}}projects#{{project_type.slug}}"><li>{{project_type.title}}</li></a>
+			{% endfor %}
+		</ul><div class="contact">
+			<a href="{{rootUrl}}"><img src="{{assetsRoot}}imgs/icon-facebook.svg" class="icon margin-r-5"></a>
+			<a href="{{rootUrl}}"><img src="{{assetsRoot}}imgs/icon-twitter.svg" class="icon margin-r-5"></a>
+			<a href="{{rootUrl}}"><img src="{{assetsRoot}}imgs/icon-googleplus.svg" class="icon margin-r-5"></a>
+			<a href="{{rootUrl}}"><img src="{{assetsRoot}}imgs/icon-youtube.svg" class="icon margin-r-5"></a>
+
+			<div class="pad-t-20">
+				<a href="https://www.google.com/maps/place/Brooklyn,+NY" class="hover-opacity" target="_blank">
+					123 Street Road<br>
+					Brooklyn, NY 11211<br>
+				</a>
+				<br>
+				<a href="tel:+12345678910" class="hover-opacity">+1.234.567.8910</a><br>
+				<br>
+				<a href="mailto:info@example.com" class="hover-opacity">info@example.com</a>
+			</div>
+		</div>
+	</div>
+	<div class="container align-center pad-tb-20 copyright">
+		&copy; {{ 'now'|date('Y') }} Directus WebApp Example, LLC
+	</div>
+</div>

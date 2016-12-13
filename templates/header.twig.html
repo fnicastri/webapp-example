@@ -1,0 +1,16 @@
+<div class="row hat">
+	<div class="container">
+		<a href="{{rootUrl}}">
+			<img class="logo" src="{{assetsRoot}}imgs/logo.svg">
+		</a>
+		<img class="menu" src="{{assetsRoot}}imgs/menu.svg">
+		<img class="close" src="{{assetsRoot}}imgs/close.svg">
+
+		<ul class="navigation">
+			<li><a class="hover-color{%if page == 'about'%} active{%endif%}" href="{{rootUrl}}about">About</a></li>
+			<li><a class="hover-color{%if page == 'projects'%} active{%endif%}" href="{{rootUrl}}projects">Projects</a></li>
+			<li><a class="hover-color{%if page == 'services'%} active{%endif%}" href="{{rootUrl}}services">Services</a></li>
+			<li><a class="hover-color{%if page == 'news'%} active{%endif%}" href="{{rootUrl}}news">News</a></li>
+		</ul>
+	</div>
+</div>

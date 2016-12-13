@@ -1,0 +1,64 @@
+{% extends "base.twig.html" %}
+
+{% block bodyClass %}project-page{% endblock %}
+
+{% block content %}
+
+<div class="row bg-dark header">
+	<div class="container">
+		<div class="text-module">
+			<div class="text-sans uppercase bold">Project Case Study</div>
+			<div class="text-serif pad-t-20">{{project.title}}</div>
+			<div class="text-body pad-t-20">{{project.intro}}</div>
+			<a href="mailto:info@example.com"><div class="button primary margin-t-30">Contact Us</div></a>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="container pad-t-80 pad-b-20">
+		<div class="detail-module margin">
+			<div class="text-serif sub dark line-bottom pad-b-5 margin-b-20">Client</div>
+			<div class="text-body italic">
+				{{project.client}}
+			</div>
+		</div>
+		<div class="detail-module margin">
+			<div class="text-serif sub dark line-bottom pad-b-5 margin-b-20">Project Duration</div>
+			<div class="text-body italic">
+				{{project.project_duration}}
+			</div>
+		</div>
+		<div class="detail-module">
+			<div class="text-serif sub dark line-bottom pad-b-5 margin-b-20">Technologies</div>
+			<div class="text-body italic">
+				{{project.technologies}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="container">
+		<div class="text-body pad-b-20 h1-sections">
+			{{project.description|raw}}
+		</div>
+		<div class="text-body pad-b-160">
+			<h3>Timeline</h3>
+			<div class="timeline">
+				{% for milestone in timeline %}
+				<div class="milestone">
+					<div class="circle"></div>
+					<div class="left text-serif">{{milestone.duration}}</div>
+					<div class="right">
+						{{milestone.description|nl2br}}
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

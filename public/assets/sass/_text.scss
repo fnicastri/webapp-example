@@ -1,0 +1,159 @@
+//////////////////////////////////////////////////////////////////////////////
+// Selection
+
+::selection {
+  background: lighten($primary, 40%);
+}
+::-moz-selection {
+  background: lighten($primary, 40%);
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Fonts
+
+.text-serif {
+	font-family: 'Libre Baskerville', serif;
+	font-size: 42px;
+	line-height: 52px;
+	font-weight: 300;
+	font-style: italic;
+	font-stretch: normal;
+	color: $dark-gray;
+	&.sub {
+		font-size: 36px;
+		line-height: 36px;
+		color: $gray;
+		&.dark {
+			color: $dark-gray;
+		}
+		&.more-line-height {
+			line-height: 52px;
+		}
+	}
+}
+.text-sans {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 14px;
+	line-height: 15px;
+	font-style: normal;
+	color: $gray;
+	&.dark {
+		color: $dark-gray;
+		font-weight: 700;
+	}
+}
+
+.text-body {
+	@extend .text-sans;
+	font-size: 15px;
+	line-height: 24px;
+	h3 {
+		font-size: 16px;
+		text-transform: uppercase;
+		color: $dark-gray;
+		font-weight: 600;
+		margin: 30px 0 5px 0;
+		padding: 0;
+		letter-spacing: 1px;
+	}
+	ul {
+		margin: 20px 0 20px 40px;
+	}
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+// Colors
+
+.text-primary {
+	color: $primary;
+}
+.text-white {
+	color: $white;
+}
+.text-light-gray {
+	color: lighten($gray, 35%);
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Hovers
+
+.hover-primary {
+	@include transition (color, $timing-short, ease-in-out);
+	&:hover {
+		color: $primary;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Columns
+
+.text-columns {
+	-webkit-column-count: 3;
+	-moz-column-count: 3;
+	column-count: 3;
+	-webkit-column-gap: 40px;
+	-moz-column-gap: 40px;
+	column-gap: 40px;
+	p {
+		margin: 0 0 20px 0;
+	}
+}
+
+.small-p {
+	p {
+		margin: 0 40px 20px 0;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Styles
+
+.faded {
+	opacity: 0.5;
+}
+.italic {
+	font-style: italic;
+}
+.normal {
+	font-style: normal;
+}
+.thin {
+	font-weight: 300;
+}
+.bold {
+	font-weight: 600;
+}
+.centered {
+	text-align: center;
+}
+.underline {
+	border-bottom: dotted 1px $black;
+}
+.uppercase {
+	text-transform: uppercase;
+}
+.lowercase {
+	text-transform: lowercase;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Alignment
+
+.align-left {
+	text-align: left;
+}
+.align-right {
+	text-align: right;
+}
+.align-center {
+	text-align: center;
+}
+.align-justify {
+	text-align: justify;
+}
+
+//////////////////////////////////////////////////////////////////////////////

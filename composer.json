@@ -1,0 +1,34 @@
+{
+    "autoload": {
+        "psr-0": {
+            "project": "lib/"
+        }
+    },
+    "require": {
+        "php":                           ">=5.4.0",
+        "slim/slim":                     "2.2.*",
+        "slim/extras":                   "dev-master",
+        "twig/twig":                     "1.14.*@dev",
+        "directus/sdk":                  "dev-d64",
+        "mandrill/mandrill":             "1.0.*"
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/directus/directus-sdk-php"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/directus/directus-acl"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/directus/directus-hook"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/directus/directus-php-utils"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{% extends "base.twig.html" %}
+
+{% block bodyClass %}services-page{% endblock %}
+
+{% block content %}
+
+<div class="row bg-dark header">
+	<div class="container">
+		<div class="text-module">
+			<div class="text-sans uppercase bold">Full-Service Digital Agency</div>
+			<div class="text-serif pad-t-20">Services Offered</div>
+			<div class="text-body pad-t-20">{{about.resources_intro}}</div>
+			<a href="mailto:info@example.com"><div class="button primary margin-t-30">Contact Us</div></a>
+		</div>
+	</div>
+</div>
+
+{% for project_type in project_types %}
+<div class="row line-bottom responsive-max">
+	<div class="container pad-b-100">
+		<a name="{{project_type.slug}}"></a>
+		<div class="text-serif pad-t-80 pad-b-40 align-center">{{project_type.title}}</div>
+		<div class="service text-body">
+			{{project_type.description}}
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+{% endblock %}

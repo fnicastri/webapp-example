@@ -1,0 +1,52 @@
+{% extends "base.twig.html" %}
+
+{% block bodyClass %}news-page{% endblock %}
+
+{% block content %}
+
+<div class="row bg-dark header">
+	<div class="container">
+		<div class="text-module">
+			<div class="text-sans uppercase bold">Technical Insight &amp; Agency Updates</div>
+			<div class="text-serif pad-t-20">News &amp; Events</div>
+			<div class="text-body pad-t-20">{{about.news_intro}}</div>
+			<a href="mailto:info@example.com"><div class="button primary margin-t-30">Contact Us</div></a>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="container pad-b-100">
+		{% for post in news %}
+
+			{% if year != post.publish_date|date("Y") %}
+			<div class="text-serif pad-t-80 pad-b-40 align-center">{{post.publish_date|date("Y")}}</div>
+			{% endif %}
+			{% set year = post.publish_date|date("Y") %}
+
+			<div class="text-body pad-b-60">
+				<div class="text-serif sub dark line-top pad-t-30 pad-b-10">{{post.title}}</div>
+				<div class="text-sans uppercase pad-b-10 bold text-light-gray">POSTED {{post.publish_date|timeago}}</div>
+				<div class="max-width-800">
+					<p>
+						{{post.intro}}
+					</p>
+					{% if post.body %}
+					<a href="#" class="hover-underline read-more" data-expand="id-1">Read More</a>
+					<div class="hidden show-more" data-post="id-1">
+						<p>
+							{{post.body}}
+						</p>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		{% endfor %}
+
+		<!-- <div class="text-serif pad-t-80 pad-b-40 align-center">2015</div> -->
+
+	</div>
+</div>
+
+{% endblock %}

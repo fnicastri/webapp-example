@@ -1,0 +1,5 @@
+.DS_Store
+/config.php
+/public/assets/sass/.sass-cache/
+/vendor
+/composer.phar

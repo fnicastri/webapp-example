@@ -1,0 +1,94 @@
+{% extends "base.twig.html" %}
+
+{% block bodyClass %}about-page{% endblock %}
+
+{% block content %}
+
+<div class="row bg-dark header">
+	<div class="container">
+		<div class="text-module">
+			<div class="text-sans uppercase bold">Based in Brooklyn, New York</div>
+			<div class="text-serif pad-t-20">About Our Agency</div>
+			<div class="text-body pad-t-20">{{about.about_intro}}</div>
+			<a href="mailto:info@example.com"><div class="button primary margin-t-30">Contact Us</div></a>
+		</div>
+	</div>
+</div>
+
+<div class="row slideshow-module">
+	<div class="container">
+		<a name="team"></a>
+		<div class="text-serif pad-t-80 pad-b-40 align-center">Our Leadership</div>
+		{% for person in staff %}
+		<div class="leadership">
+			<img src="{{mediaUrl}}{{person.image.name}}" alt="placeholder+image">
+			<div class="info">
+				<div class="text-sans uppercase pad-b-5 dark">{{person.name}}</div>
+				<div class="italic pad-b-20 text-light-gray">{{person.title}}</div>
+				<div class="text-body short-bio">
+					{{person.bio|nl2br}}
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="row blank-module philosophy-module">
+	<div class="container pad-tb-140">
+		<a name="methodology"></a>
+		<div class="text-module margin-auto max-width-750">
+			<div class="text-sans uppercase bold">Our Methodology</div>
+			<div class="text-serif sub pad-t-20 more-line-height">&ldquo;{{about.philosophy_quote}}&rdquo;</div>
+			<div class="columns">
+				{{about.philosophy_text}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row slideshow-module">
+	<div class="container">
+		<a name="office"></a>
+		<div class="text-serif pad-t-120 pad-b-40 align-center">Our Office</div>
+		<div class="slideshow">
+			<ul>
+				{% for slide in about.slideshow %}
+				<li style="background-image:url('{{mediaUrl}}{{slide.data.name}}');"></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="container">
+		<a name="faq"></a>
+		<div class="text-serif pad-t-120 align-center">Frequently Asked Questions</div>
+		<div class="text-body pad-b-40">
+			{% for question in faq %}
+			<div class="text-serif sub dark line-top pad-tb-20 margin-t-80">{{question.question}}</div>
+			<div class="max-width-800">
+				{{question.answer}}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="container">
+		<a name="forms"></a>
+		<div class="preload"></div>
+		<div class="text-serif pad-t-120 align-center">Client Forms</div>
+		<div class="docs margin-b-240">
+			{% for resource in resources %}
+			<a href="{{mediaUrl}}{{resource.file.name}}" target="_blank"><div class="doc bold">{{resource.title}}</div></a>
+			{% endfor %}
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

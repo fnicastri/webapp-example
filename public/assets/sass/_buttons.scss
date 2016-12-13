@@ -1,0 +1,25 @@
+.button {
+	@extend .text-sans;
+	@include border-radius (4px);
+	@include transition (all, $timing-short, ease-in-out);
+	background-color: $primary;
+	padding: 15px 30px;
+	display: inline-block;
+	font-size: 14px;
+	color: $white;
+	text-transform: uppercase;
+	font-weight: 600;
+	cursor: pointer;
+	&:hover {
+		background-color: darken($primary, 15%);
+	}
+	&.outline {
+		color: $primary;
+		background-color: $white;
+		border: 2px $primary solid;
+		&:hover {
+			color: darken($primary, 15%);
+			border-color: darken($primary, 15%);
+		}
+	}
+}
