@@ -4,58 +4,75 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2af9fd51e5adf34e7911858119b0a39f",
-    "content-hash": "9d2017edfd9e6d4d5841b0ae2daa257e",
+    "content-hash": "f1eb7609fce10a13324f5a88a8bc7314",
     "packages": [
         {
-            "name": "directus/acl",
+            "name": "directus/collection",
             "version": "dev-d64",
             "source": {
                 "type": "git",
-                "url": "https://github.com/directus/directus-acl",
-                "reference": "0b9440a4f8ece4bd1c89630ecb7dd5753eee8ee9"
+                "url": "https://github.com/directus/directus-collection.git",
+                "reference": "0f54b2dd89c939cae9138d4bc0acf9b07da9a18a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/directus/directus-collection/zipball/0f54b2dd89c939cae9138d4bc0acf9b07da9a18a",
+                "reference": "0f54b2dd89c939cae9138d4bc0acf9b07da9a18a",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Directus\\Acl\\": ""
+            "extra": {
+                "branch-alias": {
+                    "dev-d64": "0.9.x-dev"
                 }
             },
+            "autoload": {
+                "psr-4": {
+                    "Directus\\Collection\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Directus ACL Library",
+            "description": "Directus Collection Library",
             "keywords": [
-                "acl",
+                "collection",
                 "directus"
             ],
-            "time": "2016-11-01 19:01:15"
+            "time": "2016-11-15 02:23:54"
         },
         {
             "name": "directus/database",
-            "version": "dev-d64",
+            "version": "dev-version/6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/directus/directus-database.git",
-                "reference": "089e80dcfe5ea306700865eb6ae2dbb1a4ab6faf"
+                "reference": "b998f931f7ba9ee8dd46bb9cb901b928b46a3cf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/directus/directus-database/zipball/089e80dcfe5ea306700865eb6ae2dbb1a4ab6faf",
-                "reference": "089e80dcfe5ea306700865eb6ae2dbb1a4ab6faf",
+                "url": "https://api.github.com/repos/directus/directus-database/zipball/b998f931f7ba9ee8dd46bb9cb901b928b46a3cf8",
+                "reference": "b998f931f7ba9ee8dd46bb9cb901b928b46a3cf8",
                 "shasum": ""
             },
             "require": {
+                "directus/collection": "0.9.*",
                 "php": ">=5.4.0",
-                "zendframework/zend-db": "2.2.*@dev"
+                "zendframework/zend-db": "2.8.*"
             },
             "require-dev": {
                 "phpunit/phpunit": "~3.7.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-version/6.4": "0.9.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Directus\\Database\\": ""
@@ -70,7 +87,47 @@
                 "database",
                 "directus"
             ],
-            "time": "2016-11-02 22:15:40"
+            "time": "2016-12-12 07:26:53"
+        },
+        {
+            "name": "directus/filesystem",
+            "version": "dev-d64",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/directus/directus-filesystem.git",
+                "reference": "7cdfef32e1f41c352c018ba3523dff69743c7781"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/directus/directus-filesystem/zipball/7cdfef32e1f41c352c018ba3523dff69743c7781",
+                "reference": "7cdfef32e1f41c352c018ba3523dff69743c7781",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^1.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-d64": "0.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Directus\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Directus Filesystem Library",
+            "keywords": [
+                "directus",
+                "filesystem"
+            ],
+            "time": "2016-11-27 20:48:34"
         },
         {
             "name": "directus/hook",
@@ -78,12 +135,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/directus/directus-hook",
-                "reference": "344a88f2ffe053ab67e25c9c4a18d4554f005c34"
+                "reference": "3d9f1943b1530b162dbf83627efab5ea492ccdaa"
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-d64": "0.9.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Directus\\Hook\\": ""
@@ -98,28 +160,74 @@
                 "event",
                 "hook"
             ],
-            "time": "2016-10-15 12:46:57"
+            "time": "2016-11-16 18:22:20"
         },
         {
-            "name": "directus/sdk",
+            "name": "directus/permissions",
             "version": "dev-d64",
             "source": {
                 "type": "git",
-                "url": "https://github.com/directus/directus-sdk-php",
-                "reference": "61f3056ab77ec7555b2dd7ec19e0cc2f9962f1a4"
+                "url": "https://github.com/directus/directus-permissions.git",
+                "reference": "ede89b9221820c54e538780c73f82d5eb0dd2d3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/directus/directus-permissions/zipball/ede89b9221820c54e538780c73f82d5eb0dd2d3b",
+                "reference": "ede89b9221820c54e538780c73f82d5eb0dd2d3b",
+                "shasum": ""
             },
             "require": {
-                "directus/acl": "dev-d64",
-                "directus/database": "dev-d64",
-                "directus/hook": "dev-d64",
-                "directus/utils": "dev-d64",
-                "guzzlehttp/guzzle": "~5.3.0",
                 "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-d64": "0.9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Directus\\Permissions\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Directus Permissions (ACL) Library",
+            "keywords": [
+                "acl",
+                "directus",
+                "permissions"
+            ],
+            "time": "2016-11-16 19:14:18"
+        },
+        {
+            "name": "directus/sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/directus/directus-sdk-php",
+                "reference": "34e9c0598ebb5f6fc76788c7233de4f9f799927c"
+            },
+            "require": {
+                "directus/database": "0.9.*",
+                "directus/filesystem": "0.9.*",
+                "directus/hook": "0.9.*",
+                "directus/permissions": "0.9.*",
+                "directus/utils": "0.9.*",
+                "guzzlehttp/guzzle": "~5.3.0",
+                "php": ">=5.5.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~3.7.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Directus\\SDK\\": "src/"
@@ -136,7 +244,7 @@
                 "directus",
                 "sdk"
             ],
-            "time": "2016-11-02 22:02:34"
+            "time": "2016-12-11 19:27:28"
         },
         {
             "name": "directus/utils",
@@ -144,12 +252,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/directus/directus-php-utils",
-                "reference": "b01de5c352139249ee44613b1ebfb25efec76765"
+                "reference": "25ed893e7b6df16a6feeff26684898b8207cfb26"
             },
             "require": {
                 "php": ">=5.4.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-d64": "0.9.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Directus\\Util\\": ""
@@ -164,7 +277,7 @@
                 "helpers",
                 "utils"
             ],
-            "time": "2016-10-21 20:36:25"
+            "time": "2016-11-29 21:51:58"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -320,6 +433,89 @@
             "time": "2016-04-13 16:32:01"
         },
         {
+            "name": "league/flysystem",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "0165294685dc83e521a46e0df2ff6b8bd4df4369"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/0165294685dc83e521a46e0df2ff6b8bd4df4369",
+                "reference": "0165294685dc83e521a46e0df2ff6b8bd4df4369",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "conflict": {
+                "league/flysystem-sftp": "<1.0.6"
+            },
+            "require-dev": {
+                "ext-fileinfo": "*",
+                "mockery/mockery": "~0.9",
+                "phpspec/phpspec": "^2.2",
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-fileinfo": "Required for MimeType",
+                "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+                "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
+                "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
+                "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
+                "league/flysystem-copy": "Allows you to use Copy.com storage",
+                "league/flysystem-dropbox": "Allows you to use Dropbox storage",
+                "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
+                "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
+                "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
+                "league/flysystem-webdav": "Allows you to use WebDAV storage",
+                "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "Filesystem abstraction: Many filesystems, one API.",
+            "keywords": [
+                "Cloud Files",
+                "WebDAV",
+                "abstraction",
+                "aws",
+                "cloud",
+                "copy.com",
+                "dropbox",
+                "file systems",
+                "files",
+                "filesystem",
+                "filesystems",
+                "ftp",
+                "rackspace",
+                "remote",
+                "s3",
+                "sftp",
+                "storage"
+            ],
+            "time": "2016-11-23 11:39:43"
+        },
+        {
             "name": "mandrill/mandrill",
             "version": "1.0.55",
             "source": {
@@ -368,12 +564,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "9547056f1effc36ac242d9e2375f6be77bfa783d"
+                "reference": "2f4b5955f3942870e01ce2492f7fde6dbe3e11cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/9547056f1effc36ac242d9e2375f6be77bfa783d",
-                "reference": "9547056f1effc36ac242d9e2375f6be77bfa783d",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/2f4b5955f3942870e01ce2492f7fde6dbe3e11cd",
+                "reference": "2f4b5955f3942870e01ce2492f7fde6dbe3e11cd",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +600,7 @@
                 }
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
-            "time": "2016-11-09 19:52:00"
+            "time": "2016-11-23 18:42:25"
         },
         {
             "name": "slim/extras",
@@ -550,40 +746,43 @@
         },
         {
             "name": "zendframework/zend-db",
-            "version": "2.2.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-db.git",
-                "reference": "229dbc409bac376813303d56aec7c6e7da97c480"
+                "reference": "ae46299099c724a96fd088ae05a0b64e3748a808"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-db/zipball/229dbc409bac376813303d56aec7c6e7da97c480",
-                "reference": "229dbc409bac376813303d56aec7c6e7da97c480",
+                "url": "https://api.github.com/repos/zendframework/zend-db/zipball/ae46299099c724a96fd088ae05a0b64e3748a808",
+                "reference": "ae46299099c724a96fd088ae05a0b64e3748a808",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-stdlib": "self.version"
+                "php": "^5.5 || ^7.0",
+                "zendframework/zend-stdlib": "^2.7 || ^3.0"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "dev-master",
-                "zendframework/zend-eventmanager": "self.version",
-                "zendframework/zend-servicemanager": "self.version",
-                "zendframework/zend-stdlib": "self.version"
+                "zendframework/zend-eventmanager": "^2.6.2 || ^3.0",
+                "zendframework/zend-hydrator": "^1.1 || ^2.1",
+                "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3"
             },
             "suggest": {
                 "zendframework/zend-eventmanager": "Zend\\EventManager component",
-                "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
-                "zendframework/zend-stdlib": "2.2.10"
+                "zendframework/zend-hydrator": "Zend\\Hydrator component for using HydratingResultSets",
+                "zendframework/zend-servicemanager": "Zend\\ServiceManager component"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev",
-                    "dev-develop": "2.3-dev"
+                    "dev-master": "2.8-dev",
+                    "dev-develop": "2.9-dev"
+                },
+                "zf": {
+                    "component": "Zend\\Db",
+                    "config-provider": "Zend\\Db\\ConfigProvider"
                 }
             },
             "autoload": {
@@ -600,45 +799,35 @@
                 "db",
                 "zf2"
             ],
-            "time": "2015-02-17 19:56:04"
+            "time": "2016-08-09 19:32:50"
         },
         {
             "name": "zendframework/zend-stdlib",
-            "version": "2.2.10",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "b42d784bd142e916058a9d68eeafcc10ff63c12e"
+                "reference": "16818ed8ee2a92a503c43883dcb6263fe6283ee8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/b42d784bd142e916058a9d68eeafcc10ff63c12e",
-                "reference": "b42d784bd142e916058a9d68eeafcc10ff63c12e",
+                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/16818ed8ee2a92a503c43883dcb6263fe6283ee8",
+                "reference": "16818ed8ee2a92a503c43883dcb6263fe6283ee8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
+                "athletic/athletic": "~0.1",
                 "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "dev-master",
-                "zendframework/zend-eventmanager": "self.version",
-                "zendframework/zend-filter": "self.version",
-                "zendframework/zend-serializer": "self.version",
-                "zendframework/zend-servicemanager": "self.version"
-            },
-            "suggest": {
-                "zendframework/zend-eventmanager": "To support aggregate hydrator usage",
-                "zendframework/zend-filter": "To support naming strategy hydrator usage",
-                "zendframework/zend-serializer": "Zend\\Serializer component",
-                "zendframework/zend-servicemanager": "To support hydrator plugin manager usage"
+                "squizlabs/php_codesniffer": "^2.6.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev",
-                    "dev-develop": "2.3-dev"
+                    "dev-master": "3.1-dev",
+                    "dev-develop": "3.2-dev"
                 }
             },
             "autoload": {
@@ -655,7 +844,7 @@
                 "stdlib",
                 "zf2"
             ],
-            "time": "2014-03-05 17:29:35"
+            "time": "2016-09-13 14:40:02"
         }
     ],
     "packages-dev": [],
@@ -663,8 +852,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "slim/extras": 20,
-        "twig/twig": 20,
-        "directus/sdk": 20
+        "twig/twig": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -9,7 +9,7 @@
         "slim/slim":                     "2.2.*",
         "slim/extras":                   "dev-master",
         "twig/twig":                     "1.14.*@dev",
-        "directus/sdk":                  "dev-d64",
+        "directus/sdk":                  "0.9.*",
         "mandrill/mandrill":             "1.0.*"
     },
     "minimum-stability": "dev",
