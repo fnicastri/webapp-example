@@ -5,7 +5,7 @@ date_default_timezone_set('America/New_York');
 require __DIR__.'/../vendor/autoload.php';
 require __DIR__.'/../config.php';
 
-$client = \Directus\SDK\Client::create($config);
+$client = \Directus\SDK\ClientFactory::create($config);
 
 $TwigView = new \Slim\Extras\Views\Twig();
 $TwigView::$twigTemplateDirs = '../templates';
