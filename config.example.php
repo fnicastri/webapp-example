@@ -9,5 +9,8 @@ $config = [
         'username' => 'root',
         'password' => 'root',
         'database' => 'webapp-example',
+    ],
+    'filesystem' => [
+        'root' => __DIR__ . '/public/uploads'
     ]
 ];
