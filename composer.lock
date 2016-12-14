@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "32babe89404dc81e74d966c9ea154e75",
-    "content-hash": "f1eb7609fce10a13324f5a88a8bc7314",
+    "content-hash": "413976650d03ce48bb0a036788f3cb9b",
     "packages": [
         {
             "name": "directus/collection",
@@ -135,8 +134,14 @@
             "version": "dev-d64",
             "source": {
                 "type": "git",
-                "url": "https://github.com/directus/directus-hook",
+                "url": "https://github.com/directus/directus-hook.git",
                 "reference": "3d9f1943b1530b162dbf83627efab5ea492ccdaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/directus/directus-hook/zipball/3d9f1943b1530b162dbf83627efab5ea492ccdaa",
+                "reference": "3d9f1943b1530b162dbf83627efab5ea492ccdaa",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
@@ -152,14 +157,15 @@
                     "Directus\\Hook\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Directus Hook Library",
             "keywords": [
+                "HOOK",
                 "directus",
-                "event",
-                "hook"
+                "event"
             ],
             "time": "2016-11-16 18:22:20"
         },
@@ -208,8 +214,14 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/directus/directus-sdk-php",
-                "reference": "34e9c0598ebb5f6fc76788c7233de4f9f799927c"
+                "url": "https://github.com/directus/directus-sdk-php.git",
+                "reference": "6ea6e9e8fc6a1f6740a947600a12fba816b34d64"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/directus/directus-sdk-php/zipball/6ea6e9e8fc6a1f6740a947600a12fba816b34d64",
+                "reference": "6ea6e9e8fc6a1f6740a947600a12fba816b34d64",
+                "shasum": ""
             },
             "require": {
                 "directus/database": "0.9.*",
@@ -237,6 +249,7 @@
                     "src/helpers.php"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -245,15 +258,21 @@
                 "directus",
                 "sdk"
             ],
-            "time": "2016-12-11 19:27:28"
+            "time": "2016-12-13 19:34:45"
         },
         {
             "name": "directus/utils",
             "version": "dev-d64",
             "source": {
                 "type": "git",
-                "url": "https://github.com/directus/directus-php-utils",
-                "reference": "25ed893e7b6df16a6feeff26684898b8207cfb26"
+                "url": "https://github.com/directus/directus-php-utils.git",
+                "reference": "8258bc73ae86a1bc641b3116e46c95628f99c6c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/directus/directus-php-utils/zipball/8258bc73ae86a1bc641b3116e46c95628f99c6c0",
+                "reference": "8258bc73ae86a1bc641b3116e46c95628f99c6c0",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0"
@@ -269,6 +288,7 @@
                     "Directus\\Util\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -278,7 +298,7 @@
                 "helpers",
                 "utils"
             ],
-            "time": "2016-11-29 21:51:58"
+            "time": "2016-11-28 21:27:50"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -804,31 +824,31 @@
         },
         {
             "name": "zendframework/zend-stdlib",
-            "version": "3.0.1",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "8bafa58574204bdff03c275d1d618aaa601588ae"
+                "reference": "16818ed8ee2a92a503c43883dcb6263fe6283ee8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/8bafa58574204bdff03c275d1d618aaa601588ae",
-                "reference": "8bafa58574204bdff03c275d1d618aaa601588ae",
+                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/16818ed8ee2a92a503c43883dcb6263fe6283ee8",
+                "reference": "16818ed8ee2a92a503c43883dcb6263fe6283ee8",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5 || ^7.0"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
                 "athletic/athletic": "~0.1",
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "^2.6.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev",
-                    "dev-develop": "3.1-dev"
+                    "dev-master": "3.1-dev",
+                    "dev-develop": "3.2-dev"
                 }
             },
             "autoload": {
@@ -845,7 +865,7 @@
                 "stdlib",
                 "zf2"
             ],
-            "time": "2016-04-12 21:19:36"
+            "time": "2016-09-13 14:40:02"
         }
     ],
     "packages-dev": [],
