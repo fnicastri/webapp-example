@@ -1,7 +1,7 @@
 <?php
 
 define('ROOT_URL',    '/project/public/');
-define('MEDIA_URL',   '/media/project/');
+define('MEDIA_URL',   '/uploads/');
 
 $config = [
     'database' => [
