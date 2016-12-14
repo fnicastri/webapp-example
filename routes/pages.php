@@ -22,6 +22,17 @@ $app->get('/projects/?', function () use ($app, $client) {
 
 	// Data is fetched globally
 
+	$project_types_deep = $client->getItems('project_types', [
+		// 'depth' => 3, // This depth param is throwing an error for now
+		'status' => '1',
+		'orderBy' => 'sort',
+		'orderDirection' => 'ASC'
+	]);
+
+	// Uncomment this to see the results, hero_image should contain it's relational data with DEPTH=3
+	// print_r($project_types_deep);
+	// die();
+
 	$app->render('projects.twig.html', array('page'=>'projects'));
 });
 
@@ -96,7 +107,9 @@ $app->get('/services/?', function () use ($app, $client) {
 $app->get('/news/?', function () use ($app, $client) {
 	$news = $client->getItems('news', [
 		'status' => '1',
-		//'adv_where' => ['publish_date' => NOW()]
+		'filters' => [
+			'publish_date' => ['<=' => (new DateTime())->format('Y-m-d')] // Only get items that are past the publish date
+		],
 		'orderBy' => 'publish_date',
 		'orderDirection' => 'DESC'
 	]);
