@@ -1,7 +1,7 @@
 # Directus WebApp Example
 This is a simple boilerplate webapp (agency website) that provides an example of how Directus might be integrated into a project build. You can see an example of this site here:
 
-**[example.getdirectus.com](http://example.getdirectus.com)**
+**[example.getdirectus.com](https://example.getdirectus.com)**
 
 > **Note:** This example codebase will be updated over time to include more complex examples of SDK integration.
 
