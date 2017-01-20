@@ -2,7 +2,7 @@
 
 // The included schema uses Directus version: 6.3.5
 
-define('ROOT_URL',    '/project/public/');
+define('ROOT_URL',    '/');
 define('MEDIA_URL',   '/uploads/');
 
 $config = [
