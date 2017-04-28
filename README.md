@@ -16,5 +16,9 @@ This is a simple boilerplate webapp (agency website) that provides an example of
 ## Database & Install
 A `schema.sql` file contains the entire database for both project and Directus tables. Simply create a new database, import this file into it, and create/update the `config.php` (copy: `config.example.php`). Finally, run `composer install` within the project directory to fetch the vendor files.
 
+The credentials for the user created by the SQL file are:
+* User: `admin@getdirectus.com`
+* Pass: `password`
+
 ## Directus
 You can install Directus alongside this example to manage the database. The version used in this example is noted in `config.example.php` file. Once installed, be sure to point the Directus upload folder to this project's `/public/uploads` directory (the examples files/thumbs are already there).
