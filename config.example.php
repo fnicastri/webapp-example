@@ -11,6 +11,7 @@ $config = [
         'username' => 'root',
         'password' => 'root',
         'database' => 'webapp-example',
+        'charset' => 'utf8'
     ],
     'filesystem' => [
         'root' => __DIR__ . '/public/uploads'
