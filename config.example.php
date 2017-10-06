@@ -10,7 +10,7 @@ $config = [
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => 'root',
-        'database' => 'webapp-example',
+        'database' => 'directus',
         'charset' => 'utf8',
         'port'     => 3306
     ],

@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: localhost (MySQL 5.5.42)
-# Database: directus-webapp-example
-# Generation Time: 2016-12-13 01:29:05 +0000
+# Host: localhost (MySQL 5.6.35)
+# Database: directus
+# Generation Time: 2017-10-06 15:53:29 +0000
 # ************************************************************
 
 
@@ -72,6 +72,15 @@ CREATE TABLE `directus_activity` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `directus_activity` WRITE;
+/*!40000 ALTER TABLE `directus_activity` DISABLE KEYS */;
+
+INSERT INTO `directus_activity` (`id`, `type`, `action`, `identifier`, `table_name`, `row_id`, `user`, `data`, `delta`, `parent_id`, `parent_table`, `parent_changed`, `datetime`, `logged_ip`, `user_agent`)
+VALUES
+	(1,'LOGIN','LOGIN',NULL,'directus_users',0,1,NULL,NULL,NULL,NULL,0,'2017-10-06 15:38:41','::1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36');
+
+/*!40000 ALTER TABLE `directus_activity` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table directus_bookmarks
@@ -115,16 +124,16 @@ CREATE TABLE `directus_columns` (
   `column_name` varchar(64) NOT NULL DEFAULT '',
   `data_type` varchar(64) DEFAULT NULL,
   `ui` varchar(64) DEFAULT NULL,
-  `relationship_type` varchar(20) DEFAULT NULL,
+  `relationship_type` enum('MANYTOONE','MANYTOMANY','ONETOMANY') DEFAULT NULL,
   `related_table` varchar(64) DEFAULT NULL,
   `junction_table` varchar(64) DEFAULT NULL,
   `junction_key_left` varchar(64) DEFAULT NULL,
   `junction_key_right` varchar(64) DEFAULT NULL,
   `hidden_input` tinyint(1) NOT NULL DEFAULT '0',
-  `hidden_list` tinyint(1) NOT NULL DEFAULT '0',
   `required` tinyint(1) NOT NULL DEFAULT '0',
   `sort` int(11) DEFAULT NULL,
   `comment` varchar(1024) DEFAULT NULL,
+  `options` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `table-column` (`table_name`,`column_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -132,78 +141,80 @@ CREATE TABLE `directus_columns` (
 LOCK TABLES `directus_columns` WRITE;
 /*!40000 ALTER TABLE `directus_columns` DISABLE KEYS */;
 
-INSERT INTO `directus_columns` (`id`, `table_name`, `column_name`, `data_type`, `ui`, `relationship_type`, `related_table`, `junction_table`, `junction_key_left`, `junction_key_right`, `hidden_input`, `hidden_list`, `required`, `sort`, `comment`)
+INSERT INTO `directus_columns` (`id`, `table_name`, `column_name`, `data_type`, `ui`, `relationship_type`, `related_table`, `junction_table`, `junction_key_left`, `junction_key_right`, `hidden_input`, `required`, `sort`, `comment`, `options`)
 VALUES
-	(1,'directus_users','group',NULL,'many_to_one','MANYTOONE','directus_groups',NULL,NULL,'group_id',0,0,0,NULL,''),
-	(2,'directus_users','avatar_file_id','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'avatar_file_id',0,0,0,NULL,''),
-	(3,'resources','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,1,''),
-	(4,'resources','active',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,2,''),
-	(5,'resources','sort',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,0,3,''),
-	(6,'resources','title',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,4,''),
-	(7,'resources','all_visits',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,5,''),
-	(8,'resources','file','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'file',0,0,0,6,''),
-	(9,'about','slideshow','ALIAS','multiple_files','MANYTOMANY','directus_files','slideshow_images','about_id','file_id',0,0,0,9999,''),
-	(10,'about','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,1,''),
-	(11,'about','home_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,1,2,''),
-	(12,'about','about_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,1,3,''),
-	(13,'about','procedures_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,0,4,''),
-	(14,'about','resources_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,1,5,''),
-	(15,'about','news_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,1,6,''),
-	(16,'about','philosophy_quote',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,1,7,''),
-	(17,'about','philosophy_text',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,1,8,''),
-	(18,'slideshow_images','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,1,''),
-	(19,'slideshow_images','about_id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,0,2,''),
-	(20,'slideshow_images','file_id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,0,3,''),
-	(21,'project_types','slug',NULL,'slug',NULL,NULL,NULL,NULL,NULL,0,0,1,3,'Automatically created, this is used within the URL'),
-	(22,'project_types','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,0,''),
-	(23,'project_types','sort',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,0,1,''),
-	(24,'project_types','title',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,1,2,''),
-	(25,'project_types','surgical',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,4,''),
-	(26,'project_types','description',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,0,5,''),
-	(27,'project_types','projects','ALIAS','one_to_many','ONETOMANY','projects',NULL,NULL,'type',0,0,0,9999,'Any projects that should be showcased within this section'),
-	(28,'projects','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,0,''),
-	(29,'projects','active',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,1,''),
-	(30,'projects','title',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,1,2,''),
-	(31,'projects','type','INT','many_to_one','MANYTOONE','project_types',NULL,NULL,'type',0,0,0,4,''),
-	(32,'projects','surgical',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,5,''),
-	(33,'projects','description',NULL,'wysiwyg',NULL,NULL,NULL,NULL,NULL,0,0,0,11,'H1 for section breaks, H3 for sub-section breaks'),
-	(34,'projects','hero_image','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'hero_image',0,0,0,6,''),
-	(35,'projects','project_length',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,8,''),
-	(36,'projects','normal_recovery',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,9,''),
-	(37,'projects','possible_side_effects',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,10,''),
-	(38,'project_types','image','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'image',0,0,1,7,'PNG or SVG – Background must be removed'),
-	(39,'staff','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,1,''),
-	(40,'staff','active',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,2,''),
-	(41,'staff','sort',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,0,3,''),
-	(42,'staff','name',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,4,''),
-	(43,'staff','title',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,5,''),
-	(44,'staff','bio',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,0,6,''),
-	(45,'staff','doctor',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,7,''),
-	(46,'staff','image','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'image',0,0,0,8,''),
-	(47,'projects','slug',NULL,'slug',NULL,NULL,NULL,NULL,NULL,0,0,1,3,''),
-	(48,'projects','intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,0,7,''),
-	(49,'project_milestones','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,1,''),
-	(50,'project_milestones','sort',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,0,2,''),
-	(51,'project_milestones','duration',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,3,''),
-	(52,'project_milestones','description',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,0,4,''),
-	(53,'projects','timeline','ALIAS','one_to_many','ONETOMANY','project_milestones',NULL,NULL,'project_id',0,0,0,9999,''),
-	(54,'project_milestones','project_id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,1,0,0,3,''),
-	(56,'about','projects_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,1,4,''),
-	(57,'faq','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,1,''),
-	(58,'faq','active',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,2,''),
-	(59,'faq','sort',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,0,3,''),
-	(60,'faq','question',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,1,4,''),
-	(61,'faq','answer',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,1,5,''),
-	(62,'news','id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,1,1,''),
-	(63,'news','active',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,2,''),
-	(64,'news','title',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,3,''),
-	(65,'news','publish_date',NULL,'datetime',NULL,NULL,NULL,NULL,NULL,0,0,0,4,'If this is in the future, the post will not go live until that date/time'),
-	(66,'news','intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,0,5,'Visible on the listing page'),
-	(67,'news','body',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,0,6,'Visible once the user clicks \"read more\"'),
-	(68,'projects','case_study',NULL,'checkbox',NULL,NULL,NULL,NULL,NULL,0,0,0,6,''),
-	(69,'projects','client',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,8,''),
-	(70,'projects','project_duration',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,9,''),
-	(71,'projects','technologies',NULL,'textinput',NULL,NULL,NULL,NULL,NULL,0,0,0,10,'');
+	(1,'directus_users','group',NULL,'many_to_one','MANYTOONE','directus_groups',NULL,NULL,'group_id',0,0,NULL,'',NULL),
+	(2,'directus_users','avatar_file_id','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'avatar_file_id',0,0,NULL,'','{\"allowed_filetypes\":\"image/\"}'),
+	(3,'resources','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,1,'',NULL),
+	(4,'resources','active',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,2,'',NULL),
+	(5,'resources','sort',NULL,'sort',NULL,NULL,NULL,NULL,NULL,0,0,3,'',NULL),
+	(6,'resources','title',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,4,'',NULL),
+	(7,'resources','all_visits',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,5,'',NULL),
+	(8,'resources','file','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'file',0,0,6,'',NULL),
+	(9,'about','slideshow','ALIAS','multiple_files','MANYTOMANY','directus_files','slideshow_images','about_id','file_id',0,0,9999,'','{\"id\":\"multiple_files\",\"add_button\":\"1\",\"choose_button\":\"1\",\"remove_button\":\"1\"}'),
+	(10,'about','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,1,'',NULL),
+	(11,'about','home_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,1,2,'',NULL),
+	(12,'about','about_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,1,3,'',NULL),
+	(13,'about','procedures_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,4,'',NULL),
+	(14,'about','resources_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,1,5,'',NULL),
+	(15,'about','news_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,1,6,'',NULL),
+	(16,'about','philosophy_quote',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,1,7,'',NULL),
+	(17,'about','philosophy_text',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,1,8,'',NULL),
+	(18,'slideshow_images','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,1,'',NULL),
+	(19,'slideshow_images','about_id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,2,'',NULL),
+	(20,'slideshow_images','file_id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,0,0,3,'',NULL),
+	(21,'project_types','slug',NULL,'slug',NULL,NULL,NULL,NULL,NULL,0,1,3,'Automatically created, this is used within the URL','{\"id\":\"slug\",\"readonly\":\"1\",\"size\":\"large\",\"mirrored_field\":\"title\"}'),
+	(22,'project_types','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,0,'',NULL),
+	(23,'project_types','sort',NULL,'sort',NULL,NULL,NULL,NULL,NULL,0,0,1,'',NULL),
+	(24,'project_types','title',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,1,2,'',NULL),
+	(25,'project_types','surgical',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,4,'',NULL),
+	(26,'project_types','description',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,5,'',NULL),
+	(27,'project_types','projects','ALIAS','one_to_many','ONETOMANY','projects',NULL,NULL,'type',0,0,9999,'Any projects that should be showcased within this section','{\"id\":\"one_to_many\",\"visible_columns\":\"title\",\"result_limit\":\"100\",\"add_button\":\"1\",\"choose_button\":\"1\",\"remove_button\":\"1\",\"only_unassigned\":\"0\"}'),
+	(28,'projects','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,0,'',NULL),
+	(29,'projects','active',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,1,'',NULL),
+	(30,'projects','title',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,1,2,'',NULL),
+	(31,'projects','type','INT','many_to_one','MANYTOONE','project_types',NULL,NULL,'type',0,0,4,'','{\"id\":\"many_to_one\",\"readonly\":\"0\",\"visible_column\":\"title\",\"visible_column_template\":\"{{title}}\",\"visible_status_ids\":\"1,2\",\"placeholder_text\":\"\",\"allow_null\":\"0\",\"filter_type\":\"dropdown\",\"filter_column\":\"title\"}'),
+	(32,'projects','surgical',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,5,'',NULL),
+	(33,'projects','description',NULL,'wysiwyg_full',NULL,NULL,NULL,NULL,NULL,0,0,11,'H1 for section breaks, H3 for sub-section breaks','{\"id\":\"wysiwyg\",\"readonly\":\"0\",\"height\":\"1000\",\"bold\":\"1\",\"italic\":\"1\",\"underline\":\"1\",\"strikethrough\":\"0\",\"rule\":\"0\",\"createlink\":\"1\",\"insertimage\":\"0\",\"embedVideo\":\"0\",\"embed_width\":\"300\",\"embed_height\":\"200\",\"html\":\"1\",\"orderedList\":\"0\",\"h1\":\"1\",\"h2\":\"0\",\"h3\":\"1\",\"h4\":\"0\",\"h5\":\"0\",\"h6\":\"0\",\"blockquote\":\"0\",\"ul\":\"1\",\"ol\":\"0\"}'),
+	(34,'projects','hero_image','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'hero_image',0,0,6,'',NULL),
+	(35,'projects','project_length',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,8,'',NULL),
+	(36,'projects','normal_recovery',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,9,'',NULL),
+	(37,'projects','possible_side_effects',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,10,'',NULL),
+	(38,'project_types','image','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'image',0,1,7,'PNG or SVG – Background must be removed',NULL),
+	(39,'staff','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,1,'',NULL),
+	(40,'staff','active',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,2,'',NULL),
+	(41,'staff','sort',NULL,'sort',NULL,NULL,NULL,NULL,NULL,0,0,3,'',NULL),
+	(42,'staff','name',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,4,'',NULL),
+	(43,'staff','title',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,5,'',NULL),
+	(44,'staff','bio',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,6,'',NULL),
+	(45,'staff','doctor',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,7,'',NULL),
+	(46,'staff','image','INT','single_file','MANYTOONE','directus_files',NULL,NULL,'image',0,0,8,'',NULL),
+	(47,'projects','slug',NULL,'slug',NULL,NULL,NULL,NULL,NULL,0,1,3,'','{\"id\":\"slug\",\"readonly\":\"1\",\"size\":\"large\",\"mirrored_field\":\"title\"}'),
+	(48,'projects','intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,7,'',NULL),
+	(49,'project_milestones','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,1,'',NULL),
+	(50,'project_milestones','sort',NULL,'sort',NULL,NULL,NULL,NULL,NULL,0,0,2,'',NULL),
+	(51,'project_milestones','duration',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,3,'',NULL),
+	(52,'project_milestones','description',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,4,'',NULL),
+	(53,'projects','timeline','ALIAS','one_to_many','ONETOMANY','project_milestones',NULL,NULL,'project_id',0,0,9999,'','{\"id\":\"one_to_many\",\"visible_columns\":\"duration\",\"result_limit\":\"100\",\"add_button\":\"1\",\"choose_button\":\"0\",\"remove_button\":\"1\",\"only_unassigned\":\"1\"}'),
+	(54,'project_milestones','project_id',NULL,'numeric',NULL,NULL,NULL,NULL,NULL,1,0,3,'',NULL),
+	(56,'about','projects_intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,1,4,'',NULL),
+	(57,'faq','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,1,'',NULL),
+	(58,'faq','active',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,2,'',NULL),
+	(59,'faq','sort',NULL,'sort',NULL,NULL,NULL,NULL,NULL,0,0,3,'',NULL),
+	(60,'faq','question',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,1,4,'',NULL),
+	(61,'faq','answer',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,1,5,'',NULL),
+	(62,'news','id',NULL,'primary_key',NULL,NULL,NULL,NULL,NULL,0,1,1,'',NULL),
+	(63,'news','active',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,2,'',NULL),
+	(64,'news','title',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,3,'',NULL),
+	(65,'news','publish_date',NULL,'datetime',NULL,NULL,NULL,NULL,NULL,0,0,4,'If this is in the future, the post will not go live until that date/time',NULL),
+	(66,'news','intro',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,5,'Visible on the listing page',NULL),
+	(67,'news','body',NULL,'textarea',NULL,NULL,NULL,NULL,NULL,0,0,6,'Visible once the user clicks \"read more\"',NULL),
+	(68,'projects','case_study',NULL,'toggle',NULL,NULL,NULL,NULL,NULL,0,0,6,'',NULL),
+	(69,'projects','client',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,8,'',NULL),
+	(70,'projects','project_duration',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,9,'',NULL),
+	(71,'projects','technologies',NULL,'text_input',NULL,NULL,NULL,NULL,NULL,0,0,10,'',NULL),
+	(72,'directus_groups','users','ALIAS','directus_users','ONETOMANY','directus_users',NULL,NULL,'group',0,0,NULL,NULL,NULL),
+	(73,'directus_groups','permissions','ALIAS','directus_permissions','ONETOMANY','directus_privileges',NULL,NULL,'group_id',0,0,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `directus_columns` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -216,12 +227,12 @@ DROP TABLE IF EXISTS `directus_files`;
 
 CREATE TABLE `directus_files` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `active` tinyint(1) DEFAULT '1',
+  `status` tinyint(1) DEFAULT '1',
   `name` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT '',
   `location` varchar(200) DEFAULT NULL,
   `caption` text,
-  `type` varchar(50) DEFAULT '',
+  `type` varchar(255) DEFAULT '',
   `charset` varchar(50) DEFAULT '',
   `tags` varchar(255) DEFAULT '',
   `width` int(11) unsigned DEFAULT '0',
@@ -237,7 +248,7 @@ CREATE TABLE `directus_files` (
 LOCK TABLES `directus_files` WRITE;
 /*!40000 ALTER TABLE `directus_files` DISABLE KEYS */;
 
-INSERT INTO `directus_files` (`id`, `active`, `name`, `title`, `location`, `caption`, `type`, `charset`, `tags`, `width`, `height`, `size`, `embed_id`, `user`, `date_uploaded`, `storage_adapter`)
+INSERT INTO `directus_files` (`id`, `status`, `name`, `title`, `location`, `caption`, `type`, `charset`, `tags`, `width`, `height`, `size`, `embed_id`, `user`, `date_uploaded`, `storage_adapter`)
 VALUES
 	(1,1,'e11e240766218220e505656e21b20392.jpg','Office Image','','','image/jpeg','binary','',3872,2592,2607553,NULL,1,'2016-12-12 17:53:31','local'),
 	(2,1,'f78e11de9a8d8239333bd89fdabd6641.jpg','Leadership Image','','','image/jpeg','binary','',800,838,137862,NULL,1,'2016-12-12 17:53:38','local'),
@@ -258,16 +269,19 @@ CREATE TABLE `directus_groups` (
   `name` varchar(100) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
   `restrict_to_ip_whitelist` text,
-  PRIMARY KEY (`id`)
+  `nav_blacklist` varchar(500) DEFAULT NULL,
+  `nav_override` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `directus_groups_name_unique` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `directus_groups` WRITE;
 /*!40000 ALTER TABLE `directus_groups` DISABLE KEYS */;
 
-INSERT INTO `directus_groups` (`id`, `name`, `description`, `restrict_to_ip_whitelist`)
+INSERT INTO `directus_groups` (`id`, `name`, `description`, `restrict_to_ip_whitelist`, `nav_blacklist`, `nav_override`)
 VALUES
-	(1,'Administrator','Full access to entire system',NULL),
-	(2,'Users','Limited access to system',NULL);
+	(1,'Administrator','Full access to entire system',NULL,NULL,NULL),
+	(2,'Users','Limited access to system',NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `directus_groups` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -284,7 +298,7 @@ CREATE TABLE `directus_messages` (
   `subject` varchar(255) NOT NULL DEFAULT '',
   `message` text NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `attachment` int(11) unsigned DEFAULT NULL,
+  `attachment` varchar(512) DEFAULT NULL,
   `response_to` int(11) unsigned DEFAULT NULL,
   `comment_metadata` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -303,6 +317,7 @@ CREATE TABLE `directus_messages_recipients` (
   `recipient` int(11) unsigned NOT NULL,
   `read` tinyint(1) NOT NULL,
   `group` int(11) unsigned DEFAULT NULL,
+  `archived` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -321,8 +336,9 @@ CREATE TABLE `directus_preferences` (
   `columns_visible` varchar(300) DEFAULT NULL,
   `sort` varchar(64) DEFAULT 'id',
   `sort_order` varchar(5) DEFAULT 'ASC',
-  `status` varchar(5) DEFAULT '3',
+  `status` varchar(64) DEFAULT NULL,
   `search_string` text,
+  `list_view_options` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`user`,`table_name`,`title`),
   UNIQUE KEY `pref_title_constraint` (`user`,`table_name`,`title`)
@@ -331,33 +347,33 @@ CREATE TABLE `directus_preferences` (
 LOCK TABLES `directus_preferences` WRITE;
 /*!40000 ALTER TABLE `directus_preferences` DISABLE KEYS */;
 
-INSERT INTO `directus_preferences` (`id`, `user`, `table_name`, `title`, `columns_visible`, `sort`, `sort_order`, `status`, `search_string`)
+INSERT INTO `directus_preferences` (`id`, `user`, `table_name`, `title`, `columns_visible`, `sort`, `sort_order`, `status`, `search_string`, `list_view_options`)
 VALUES
-	(1,1,'project_images',NULL,'about_id,file_id','id','ASC','1,2',NULL),
-	(2,1,'about',NULL,'home_intro,about_intro,projects_intro,resources_intro,news_intro','id','ASC','1,2',NULL),
-	(3,1,'directus_bookmarks',NULL,'user,title,url,icon_class','id','ASC','1,2',NULL),
-	(4,1,'directus_columns',NULL,'table_name,column_name,data_type,ui,relationship_type','sort','ASC','1,2',NULL),
-	(5,1,'directus_files',NULL,'name,title,location,caption','date_uploaded','DESC','1,2',NULL),
-	(6,1,'directus_groups',NULL,'name,description,restrict_to_ip_whitelist','id','ASC','1,2',NULL),
-	(7,1,'directus_messages',NULL,'from,subject,message,datetime,attachment','id','ASC','1,2',NULL),
-	(8,1,'directus_messages_recipients',NULL,'message_id,recipient,read,group','id','ASC','1,2',NULL),
-	(9,1,'directus_preferences',NULL,'user,table_name,title,columns_visible','sort','ASC','1,2',NULL),
-	(10,1,'directus_privileges',NULL,'table_name,allow_view,allow_add,allow_edit,allow_delete','id','ASC','1,2',NULL),
-	(11,1,'directus_schema_migrations',NULL,'version','id','ASC','1,2',NULL),
-	(12,1,'directus_settings',NULL,'collection,name,value','id','ASC','1,2',NULL),
-	(13,1,'directus_tables',NULL,'hidden,single,default_status,footer,list_view','table_name','ASC','1,2',NULL),
-	(14,1,'directus_ui',NULL,'table_name,column_name,ui_name,name,value','id','ASC','1,2',NULL),
-	(15,1,'directus_users',NULL,'first_name,last_name,email,password','id','ASC','1,2',NULL),
-	(16,1,'faq',NULL,'question,answer','sort','ASC','1,2',NULL),
-	(17,1,'news',NULL,'title,publish_date,intro,body','id','ASC','1,2',NULL),
-	(18,1,'project_milestones',NULL,'project_id,duration,description','sort','ASC','1,2',NULL),
-	(19,1,'project_types',NULL,'title,description,slug,image','sort','ASC','1,2',NULL),
-	(20,1,'projects',NULL,'title,slug,type,case_study','id','ASC','1,2',NULL),
-	(21,1,'requests',NULL,'date_submitted,name,project,contact','id','ASC','1,2',NULL),
-	(22,1,'resources',NULL,'title,file','sort','ASC','1,2',NULL),
-	(23,1,'slideshow_images',NULL,'about_id,file_id','id','ASC','1,2',NULL),
-	(24,1,'staff',NULL,'name,title,bio','sort','ASC','1,2',NULL),
-	(25,1,'directus_activity',NULL,'type,action,identifier,table_name,row_id','id','ASC','1,2',NULL);
+	(1,1,'project_images',NULL,'about_id,file_id','id','ASC','1,2',NULL,'{\"spacing\":\"cozy\",\"currentView\":\"table\"}'),
+	(2,1,'about',NULL,'home_intro,about_intro,projects_intro,resources_intro,news_intro','id','ASC','1,2',NULL,NULL),
+	(3,1,'directus_bookmarks',NULL,'user,title,url,icon_class','id','ASC','1,2',NULL,NULL),
+	(4,1,'directus_columns',NULL,'table_name,column_name,data_type,ui,relationship_type','sort','ASC','1,2',NULL,NULL),
+	(5,1,'directus_files',NULL,'name,title,location,caption','date_uploaded','DESC','1,2',NULL,NULL),
+	(6,1,'directus_groups',NULL,'name,description,restrict_to_ip_whitelist','id','ASC','1,2',NULL,NULL),
+	(7,1,'directus_messages',NULL,'from,subject,message,datetime,attachment','id','ASC','1,2',NULL,NULL),
+	(8,1,'directus_messages_recipients',NULL,'message_id,recipient,read,group','id','ASC','1,2',NULL,NULL),
+	(9,1,'directus_preferences',NULL,'user,table_name,title,columns_visible','sort','ASC','1,2',NULL,NULL),
+	(10,1,'directus_privileges',NULL,'table_name,allow_view,allow_add,allow_edit,allow_delete','id','ASC','1,2',NULL,NULL),
+	(11,1,'directus_schema_migrations',NULL,'version','id','ASC','1,2',NULL,NULL),
+	(12,1,'directus_settings',NULL,'collection,name,value','id','ASC','1,2',NULL,NULL),
+	(13,1,'directus_tables',NULL,'hidden,single,default_status,footer,list_view','table_name','ASC','1,2',NULL,NULL),
+	(14,1,'directus_ui',NULL,'table_name,column_name,ui_name,name,value','id','ASC','1,2',NULL,NULL),
+	(15,1,'directus_users',NULL,'first_name,last_name,email,password','id','ASC','1,2',NULL,NULL),
+	(16,1,'faq',NULL,'question,answer','sort','ASC','1,2',NULL,'{\"spacing\":\"cozy\",\"currentView\":\"table\"}'),
+	(17,1,'news',NULL,'title,publish_date,intro,body','id','ASC','1,2',NULL,'{\"spacing\":\"cozy\",\"currentView\":\"table\"}'),
+	(18,1,'project_milestones',NULL,'project_id,duration,description','sort','ASC','1,2',NULL,NULL),
+	(19,1,'project_types',NULL,'title,description,slug,image','sort','ASC','1,2',NULL,NULL),
+	(20,1,'projects',NULL,'title,slug,type,case_study','id','ASC','1,2',NULL,NULL),
+	(21,1,'requests',NULL,'date_submitted,name,project,contact','id','ASC','1,2',NULL,'{\"spacing\":\"cozy\",\"currentView\":\"table\"}'),
+	(22,1,'resources',NULL,'title,file','sort','ASC','1,2',NULL,'{\"spacing\":\"cozy\",\"currentView\":\"table\"}'),
+	(23,1,'slideshow_images',NULL,'about_id,file_id','id','ASC','1,2',NULL,NULL),
+	(24,1,'staff',NULL,'name,title,bio','sort','ASC','1,2',NULL,NULL),
+	(25,1,'directus_activity',NULL,'type,action,identifier,table_name,row_id','id','ASC','1,2',NULL,NULL);
 
 /*!40000 ALTER TABLE `directus_preferences` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -371,16 +387,16 @@ DROP TABLE IF EXISTS `directus_privileges`;
 CREATE TABLE `directus_privileges` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `table_name` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `allow_view` tinyint(1) NOT NULL DEFAULT '0',
-  `allow_add` tinyint(1) NOT NULL DEFAULT '0',
-  `allow_edit` tinyint(1) NOT NULL DEFAULT '0',
-  `allow_delete` tinyint(1) NOT NULL DEFAULT '0',
-  `allow_alter` tinyint(1) NOT NULL DEFAULT '0',
+  `allow_view` tinyint(4) DEFAULT '0',
+  `allow_add` tinyint(4) DEFAULT '0',
+  `allow_edit` tinyint(4) DEFAULT '0',
+  `allow_delete` tinyint(4) DEFAULT '0',
+  `allow_alter` tinyint(4) DEFAULT '0',
   `group_id` int(11) unsigned NOT NULL,
   `read_field_blacklist` varchar(1000) CHARACTER SET latin1 DEFAULT NULL,
   `write_field_blacklist` varchar(1000) CHARACTER SET latin1 DEFAULT NULL,
   `nav_listed` tinyint(1) NOT NULL DEFAULT '1',
-  `status_id` tinyint(1) NOT NULL DEFAULT '0',
+  `status_id` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -389,47 +405,47 @@ LOCK TABLES `directus_privileges` WRITE;
 
 INSERT INTO `directus_privileges` (`id`, `table_name`, `allow_view`, `allow_add`, `allow_edit`, `allow_delete`, `allow_alter`, `group_id`, `read_field_blacklist`, `write_field_blacklist`, `nav_listed`, `status_id`)
 VALUES
-	(1,'directus_activity',2,1,2,2,1,1,NULL,NULL,1,0),
-	(2,'directus_columns',2,1,2,2,1,1,NULL,NULL,1,0),
-	(3,'directus_groups',2,1,2,2,1,1,NULL,NULL,1,0),
-	(4,'directus_files',2,1,2,2,1,1,NULL,NULL,1,0),
-	(5,'directus_messages',2,1,2,2,1,1,NULL,NULL,1,0),
-	(6,'directus_preferences',2,1,2,2,1,1,NULL,NULL,1,0),
-	(7,'directus_privileges',2,1,2,2,1,1,NULL,NULL,1,0),
-	(8,'directus_settings',2,1,2,2,1,1,NULL,NULL,1,0),
-	(9,'directus_tables',2,1,2,2,1,1,NULL,NULL,1,0),
-	(10,'directus_ui',2,1,2,2,1,1,NULL,NULL,1,0),
-	(11,'directus_users',2,1,2,2,1,1,NULL,NULL,1,0),
-	(12,'directus_messages_recipients',2,1,2,2,1,1,NULL,NULL,1,0),
-	(13,'directus_bookmarks',2,1,2,2,1,1,NULL,NULL,1,0),
-	(14,'about',2,1,2,2,1,1,NULL,NULL,1,0),
-	(15,'news',2,1,2,2,1,1,NULL,NULL,1,0),
-	(16,'faq',2,1,2,2,1,1,NULL,NULL,1,0),
-	(17,'projects',2,1,2,2,1,1,NULL,NULL,1,0),
-	(18,'project_types',2,1,2,2,1,1,NULL,NULL,1,0),
-	(19,'resources',2,1,2,2,1,1,NULL,NULL,1,0),
-	(20,'staff',2,1,2,2,1,1,NULL,NULL,1,0),
-	(21,'slideshow_images',2,1,2,2,1,1,NULL,NULL,1,0),
-	(22,'project_milestones',2,1,2,2,1,1,NULL,NULL,1,0),
-	(23,'requests',2,1,2,2,1,1,NULL,NULL,1,0),
-	(24,'project_images',2,1,2,2,1,1,NULL,NULL,1,0),
-	(25,'directus_activity',2,1,2,2,1,2,NULL,NULL,1,0),
-	(26,'directus_bookmarks',2,1,2,2,1,2,NULL,NULL,1,0),
-	(27,'directus_columns',2,1,2,2,1,2,NULL,NULL,1,0),
-	(28,'directus_files',2,1,2,2,1,2,NULL,NULL,1,0),
-	(29,'directus_groups',2,1,2,2,1,2,NULL,NULL,1,0),
-	(30,'directus_messages',2,1,2,2,1,2,NULL,NULL,1,0),
-	(31,'directus_messages_recipients',2,1,2,2,1,2,NULL,NULL,1,0),
-	(32,'directus_preferences',2,1,2,2,1,2,NULL,NULL,1,0),
-	(33,'directus_privileges',2,1,2,2,1,2,NULL,NULL,1,0),
-	(34,'directus_schema_migrations',2,1,2,2,1,2,NULL,NULL,1,0),
-	(35,'directus_settings',2,1,2,2,1,2,NULL,NULL,1,0),
-	(36,'directus_tables',2,1,2,2,1,2,NULL,NULL,1,0),
-	(37,'directus_ui',2,1,2,2,1,2,NULL,NULL,1,0),
-	(38,'directus_users',2,1,2,2,1,2,NULL,NULL,1,0),
-	(39,'news',2,1,2,2,1,2,NULL,NULL,1,0),
-	(40,'about',2,1,2,2,1,2,NULL,NULL,1,0),
-	(41,'faq',2,1,2,2,1,2,NULL,NULL,1,0);
+	(1,'directus_activity',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(2,'directus_columns',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(3,'directus_groups',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(4,'directus_files',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(5,'directus_messages',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(6,'directus_preferences',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(7,'directus_privileges',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(8,'directus_settings',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(9,'directus_tables',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(10,'directus_ui',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(11,'directus_users',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(12,'directus_messages_recipients',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(13,'directus_bookmarks',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(14,'about',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(15,'news',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(16,'faq',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(17,'projects',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(18,'project_types',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(19,'resources',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(20,'staff',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(21,'slideshow_images',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(22,'project_milestones',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(23,'requests',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(24,'project_images',2,1,2,2,1,1,NULL,NULL,1,NULL),
+	(25,'directus_activity',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(26,'directus_bookmarks',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(27,'directus_columns',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(28,'directus_files',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(29,'directus_groups',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(30,'directus_messages',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(31,'directus_messages_recipients',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(32,'directus_preferences',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(33,'directus_privileges',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(34,'directus_schema_migrations',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(35,'directus_settings',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(36,'directus_tables',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(37,'directus_ui',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(38,'directus_users',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(39,'news',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(40,'about',2,1,2,2,1,2,NULL,NULL,1,NULL),
+	(41,'faq',2,1,2,2,1,2,NULL,NULL,1,NULL);
 
 /*!40000 ALTER TABLE `directus_privileges` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -462,7 +478,59 @@ VALUES
 	('20150204031412'),
 	('20150204041007'),
 	('20150204042025'),
-	('20150204042725');
+	('20150204042725'),
+	('20150226033750'),
+	('20150705010917'),
+	('20150705022037'),
+	('20150705024605'),
+	('20150705025217'),
+	('20150706152311'),
+	('20150706223858'),
+	('20150720121526'),
+	('20150723013904'),
+	('20151010025831'),
+	('20151221053654'),
+	('20160121140100'),
+	('20160226230144'),
+	('20160422124055'),
+	('20160610205828'),
+	('20160611145718'),
+	('20160611154201'),
+	('20160627124603'),
+	('20160718185828'),
+	('20160720001010'),
+	('20160728145005'),
+	('20160806143210'),
+	('20160818012556'),
+	('20160818014107'),
+	('20160818015422'),
+	('20160818020832'),
+	('20160826132455'),
+	('20161019115703'),
+	('20161027135703'),
+	('20170110014122'),
+	('20170125222528'),
+	('20170209165022'),
+	('20170209165644'),
+	('20170214021022'),
+	('20170221145122'),
+	('20170224030303'),
+	('20170304162938'),
+	('20170305154928'),
+	('20170305220945'),
+	('20170309010203'),
+	('20170316150303'),
+	('20170316180303'),
+	('20170317185243'),
+	('20170407153544'),
+	('20170507201455'),
+	('20170523213643'),
+	('20170630231929'),
+	('20170704111001'),
+	('20170718015422'),
+	('20170802072245'),
+	('20170805093920'),
+	('20170808134123');
 
 /*!40000 ALTER TABLE `directus_schema_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -516,7 +584,6 @@ CREATE TABLE `directus_tables` (
   `single` tinyint(1) NOT NULL DEFAULT '0',
   `default_status` tinyint(1) NOT NULL DEFAULT '1',
   `footer` tinyint(1) DEFAULT '0',
-  `list_view` varchar(200) DEFAULT NULL,
   `column_groupings` varchar(255) DEFAULT NULL,
   `primary_column` varchar(255) DEFAULT NULL,
   `user_create_column` varchar(64) DEFAULT NULL,
@@ -524,120 +591,35 @@ CREATE TABLE `directus_tables` (
   `date_create_column` varchar(64) DEFAULT NULL,
   `date_update_column` varchar(64) DEFAULT NULL,
   `filter_column_blacklist` text,
+  `display_template` varchar(255) DEFAULT '',
+  `preview_url` varchar(255) DEFAULT '',
+  `sort_column` varchar(64) DEFAULT NULL,
+  `status_column` varchar(64) DEFAULT NULL,
+  `status_mapping` text,
   PRIMARY KEY (`table_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `directus_tables` WRITE;
 /*!40000 ALTER TABLE `directus_tables` DISABLE KEYS */;
 
-INSERT INTO `directus_tables` (`table_name`, `hidden`, `single`, `default_status`, `footer`, `list_view`, `column_groupings`, `primary_column`, `user_create_column`, `user_update_column`, `date_create_column`, `date_update_column`, `filter_column_blacklist`)
+INSERT INTO `directus_tables` (`table_name`, `hidden`, `single`, `default_status`, `footer`, `column_groupings`, `primary_column`, `user_create_column`, `user_update_column`, `date_create_column`, `date_update_column`, `filter_column_blacklist`, `display_template`, `preview_url`, `sort_column`, `status_column`, `status_mapping`)
 VALUES
-	('about',0,1,1,0,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL),
-	('directus_bookmarks',1,0,1,0,NULL,NULL,NULL,'user',NULL,NULL,NULL,NULL),
-	('directus_files',1,0,1,0,NULL,NULL,NULL,'user',NULL,NULL,NULL,NULL),
-	('directus_messages_recipients',1,0,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('directus_preferences',1,0,1,0,NULL,NULL,NULL,'user',NULL,NULL,NULL,NULL),
-	('directus_users',1,0,1,0,NULL,NULL,NULL,'id',NULL,NULL,NULL,NULL),
-	('faq',0,0,1,0,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL),
-	('news',0,0,1,0,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL),
-	('projects',0,0,1,0,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL),
-	('project_milestones',1,0,1,0,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL),
-	('project_types',0,0,1,0,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL),
-	('resources',0,0,1,0,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL),
-	('slideshow_images',1,0,1,0,NULL,NULL,'id',NULL,NULL,NULL,NULL,NULL),
-	('staff',0,0,1,0,NULL,NULL,'',NULL,NULL,NULL,NULL,NULL);
+	('about',0,1,1,0,NULL,'',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('directus_bookmarks',1,0,1,0,NULL,NULL,'user',NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('directus_files',1,0,1,0,NULL,NULL,'user',NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('directus_messages_recipients',1,0,1,0,NULL,NULL,'recipient',NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('directus_preferences',1,0,1,0,NULL,NULL,'user',NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('directus_users',1,0,1,0,NULL,NULL,'id',NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('faq',0,0,1,0,NULL,'',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('news',0,0,1,0,NULL,'',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('projects',0,0,1,0,NULL,'',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('project_milestones',1,0,1,0,NULL,'',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('project_types',0,0,1,0,NULL,'',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('resources',0,0,1,0,NULL,'',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('slideshow_images',1,0,1,0,NULL,'id',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL),
+	('staff',0,0,1,0,NULL,'',NULL,NULL,NULL,NULL,NULL,'','',NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `directus_tables` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table directus_ui
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `directus_ui`;
-
-CREATE TABLE `directus_ui` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `table_name` varchar(64) DEFAULT NULL,
-  `column_name` varchar(64) DEFAULT NULL,
-  `ui_name` varchar(200) DEFAULT NULL,
-  `name` varchar(200) DEFAULT NULL,
-  `value` text,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique` (`table_name`,`column_name`,`ui_name`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `directus_ui` WRITE;
-/*!40000 ALTER TABLE `directus_ui` DISABLE KEYS */;
-
-INSERT INTO `directus_ui` (`id`, `table_name`, `column_name`, `ui_name`, `name`, `value`)
-VALUES
-	(1,'directus_users','avatar_file_id','single_file','allowed_filetypes','image/'),
-	(2,'about','slideshow','multiple_files','id','multiple_files'),
-	(3,'about','slideshow','multiple_files','add_button','1'),
-	(4,'about','slideshow','multiple_files','choose_button','1'),
-	(5,'about','slideshow','multiple_files','remove_button','1'),
-	(6,'project_types','slug','slug','id','slug'),
-	(7,'project_types','slug','slug','readonly','1'),
-	(8,'project_types','slug','slug','size','large'),
-	(9,'project_types','slug','slug','mirrored_field','title'),
-	(10,'project_types','projects','one_to_many','id','one_to_many'),
-	(11,'project_types','projects','one_to_many','visible_columns','title'),
-	(12,'project_types','projects','one_to_many','result_limit','100'),
-	(13,'project_types','projects','one_to_many','add_button','1'),
-	(14,'project_types','projects','one_to_many','choose_button','1'),
-	(15,'project_types','projects','one_to_many','remove_button','1'),
-	(16,'project_types','projects','one_to_many','only_unassigned','0'),
-	(17,'projects','type','many_to_one','id','many_to_one'),
-	(18,'projects','type','many_to_one','readonly','0'),
-	(19,'projects','type','many_to_one','visible_column','title'),
-	(20,'projects','type','many_to_one','visible_column_template','{{title}}'),
-	(21,'projects','type','many_to_one','visible_status_ids','1,2'),
-	(22,'projects','type','many_to_one','placeholder_text',''),
-	(23,'projects','type','many_to_one','allow_null','0'),
-	(24,'projects','type','many_to_one','filter_type','dropdown'),
-	(25,'projects','type','many_to_one','filter_column','title'),
-	(26,'projects','slug','slug','id','slug'),
-	(27,'projects','slug','slug','readonly','1'),
-	(28,'projects','slug','slug','size','large'),
-	(29,'projects','slug','slug','mirrored_field','title'),
-	(30,'projects','description','wysiwyg','id','wysiwyg'),
-	(31,'projects','description','wysiwyg','readonly','0'),
-	(32,'projects','description','wysiwyg','height','1000'),
-	(33,'projects','description','wysiwyg','bold','1'),
-	(34,'projects','description','wysiwyg','italic','1'),
-	(35,'projects','description','wysiwyg','underline','1'),
-	(36,'projects','description','wysiwyg','strikethrough','0'),
-	(37,'projects','description','wysiwyg','rule','0'),
-	(38,'projects','description','wysiwyg','createlink','1'),
-	(39,'projects','description','wysiwyg','insertimage','0'),
-	(40,'projects','description','wysiwyg','embedVideo','0'),
-	(41,'projects','description','wysiwyg','embed_width','300'),
-	(42,'projects','description','wysiwyg','embed_height','200'),
-	(43,'projects','description','wysiwyg','html','1'),
-	(44,'projects','description','wysiwyg','orderedList','0'),
-	(45,'projects','description','wysiwyg','h1','1'),
-	(46,'projects','description','wysiwyg','h2','0'),
-	(47,'projects','description','wysiwyg','h3','1'),
-	(48,'projects','description','wysiwyg','h4','0'),
-	(49,'projects','description','wysiwyg','h5','0'),
-	(50,'projects','description','wysiwyg','h6','0'),
-	(51,'projects','description','wysiwyg','blockquote','0'),
-	(52,'projects','description','wysiwyg','ul','1'),
-	(53,'projects','description','wysiwyg','ol','0'),
-	(54,'projects','timeline','one_to_many','id','one_to_many'),
-	(55,'projects','timeline','one_to_many','visible_columns','duration'),
-	(56,'projects','timeline','one_to_many','result_limit','100'),
-	(57,'projects','timeline','one_to_many','add_button','1'),
-	(58,'projects','timeline','one_to_many','choose_button','0'),
-	(59,'projects','timeline','one_to_many','remove_button','1'),
-	(60,'projects','timeline','one_to_many','only_unassigned','1'),
-	(61,'about','procedure_slideshow','multiple_files','id','multiple_files'),
-	(62,'about','procedure_slideshow','multiple_files','add_button','1'),
-	(63,'about','procedure_slideshow','multiple_files','choose_button','1'),
-	(64,'about','procedure_slideshow','multiple_files','remove_button','1');
-
-/*!40000 ALTER TABLE `directus_ui` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -648,13 +630,13 @@ DROP TABLE IF EXISTS `directus_users`;
 
 CREATE TABLE `directus_users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `active` tinyint(1) DEFAULT '1',
+  `status` tinyint(1) DEFAULT '1',
   `first_name` varchar(50) DEFAULT '',
   `last_name` varchar(50) DEFAULT '',
-  `email` varchar(255) DEFAULT '',
+  `email` varchar(128) NOT NULL DEFAULT '',
   `password` varchar(255) DEFAULT '',
   `salt` varchar(255) DEFAULT '',
-  `token` varchar(255) NOT NULL,
+  `token` varchar(128) DEFAULT NULL,
   `access_token` varchar(255) DEFAULT '',
   `reset_token` varchar(255) DEFAULT '',
   `reset_expiration` datetime DEFAULT NULL,
@@ -672,20 +654,25 @@ CREATE TABLE `directus_users` (
   `address` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `state` varchar(2) DEFAULT NULL,
+  `country` char(2) DEFAULT NULL,
   `zip` varchar(10) DEFAULT NULL,
   `language` varchar(8) DEFAULT 'en',
   `timezone` varchar(32) DEFAULT 'America/New_York',
+  `invite_token` varchar(255) DEFAULT NULL,
+  `invite_date` datetime DEFAULT NULL,
+  `invite_accepted` tinyint(1) DEFAULT NULL,
+  `invite_sender` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `directus_users_token_unique` (`token`),
-  UNIQUE KEY `directus_users_email_unique` (`email`)
+  UNIQUE KEY `directus_users_email_unique` (`email`),
+  UNIQUE KEY `directus_users_token_unique` (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `directus_users` WRITE;
 /*!40000 ALTER TABLE `directus_users` DISABLE KEYS */;
 
-INSERT INTO `directus_users` (`id`, `active`, `first_name`, `last_name`, `email`, `password`, `salt`, `token`, `access_token`, `reset_token`, `reset_expiration`, `position`, `email_messages`, `last_login`, `last_access`, `last_page`, `ip`, `group`, `avatar`, `avatar_file_id`, `location`, `phone`, `address`, `city`, `state`, `zip`, `language`, `timezone`)
+INSERT INTO `directus_users` (`id`, `status`, `first_name`, `last_name`, `email`, `password`, `salt`, `token`, `access_token`, `reset_token`, `reset_expiration`, `position`, `email_messages`, `last_login`, `last_access`, `last_page`, `ip`, `group`, `avatar`, `avatar_file_id`, `location`, `phone`, `address`, `city`, `state`, `country`, `zip`, `language`, `timezone`, `invite_token`, `invite_date`, `invite_accepted`, `invite_sender`)
 VALUES
-	(1,1,'Admin','User','admin@getdirectus.com','$2y$12$b0SdpGnKZdStArHW4s14OuJSajXpICj0nxacGRB1FXjdm4vPukvZq','vdSHA85qIUCdRUww','0ONOA0uFvWnCZzgW','4de9286ef8120aae3be3b36a599e70503bcaab79','','2016-10-28 02:21:51','RANGER',0,'2016-12-12 20:27:15','2016-12-12 20:28:00','{\"path\":\"users\",\"route\":\"users\"}','',1,'//www.gravatar.com/avatar/3a9a5bf6a6400f3487b17684c72b99b0?s=200&d=identicon&r=g',NULL,'Brooklyn, NY','+1 (234) 567-8910','123 Example Road','Brooklyn','NY','11211','en','America/New_York');
+	(1,1,'Admin','User','admin@getdirectus.com','$2y$12$b0SdpGnKZdStArHW4s14OuJSajXpICj0nxacGRB1FXjdm4vPukvZq','vdSHA85qIUCdRUww','0ONOA0uFvWnCZzgW','33b4fd46d8a812e495a83598337daf67064559a3','','2016-10-28 02:21:51','RANGER',0,'2017-10-06 15:38:41','2017-10-06 15:44:09','{\"path\":\"tables\",\"route\":\"tables\"}','::1',1,'//www.gravatar.com/avatar/3a9a5bf6a6400f3487b17684c72b99b0?s=200&d=identicon&r=g',NULL,'Brooklyn, NY','+1 (234) 567-8910','123 Example Road','Brooklyn','NY',NULL,'11211','en','America/New_York',NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `directus_users` ENABLE KEYS */;
 UNLOCK TABLES;
