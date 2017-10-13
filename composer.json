@@ -4,7 +4,7 @@
         "slim/slim":                     "2.2.*",
         "slim/extras":                   "dev-master",
         "twig/twig":                     "1.14.*@dev",
-        "directus/sdk":                  "0.1.*",
+        "directus/sdk":                  "^1.0",
         "mandrill/mandrill":             "1.0.*"
     },
     "minimum-stability": "dev",
